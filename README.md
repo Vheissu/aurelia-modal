@@ -2,7 +2,7 @@
 A modal plugin for Aurelia with no dependencies, just vanilla Javascript. Simplistic API, keyboard and mouse events. Supports rendering using viewmodels or HTML.
 
 ## Install and Setup
-1. Install: jspm install aurelia-modal=github:vheissu/aurelia-modal
+1. Install: jspm install aurelia-modal
 2. Use during the bootstrapping phase:
 
 Use the plugin in your app's main.js:
