@@ -1,0 +1,40 @@
+{
+  "name": "aurelia-modal",
+  "description": "A modal plugin for Aurelia with no dependencies, just vanilla Javascript.",
+  "version": "1.0.0",
+  "main": "dist/commonjs/index.js",
+  "scripts": {
+    "test": "gulp test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Vheissu/aurelia-modal.git"
+  },
+  "keywords": [
+    "aurelia",
+    "modal",
+    "popup",
+    "dialog"
+  ],
+  "author": "Dwayne Charrington <dwaynecharrington@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Vheissu/aurelia-modal/issues"
+  },
+  "homepage": "https://github.com/Vheissu/aurelia-modal#readme",
+  "jspm": {
+    "main": "index",
+    "format": "register",
+    "directories": {
+      "lib": "dist/system"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.22",
+      "babel-runtime": "npm:babel-runtime@^5.8.20",
+      "core-js": "npm:core-js@^1.1.0"
+    }
+  },
+  "devDependencies": {
+    "gulp-babel": "^5.2.1"
+  }
+}
