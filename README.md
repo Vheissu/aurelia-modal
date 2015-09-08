@@ -18,10 +18,35 @@ export function configure(aurelia) {
 }
 ```
 
-## Using the plugin
-Inside of your HTML you can use the element like so:
+## In Use
+To display or hide the modal, you need to use the ``showing`` attribute and pass through a boolean value.
 
-``<modal></modal>``
+**Allow escape key to close modal:**
+``<modal allowKeyClose="true"></modal>``
+
+**Allow clicks outside modal content area to close modal:**
+``<modal allowClickClose="true"></modal>``
+
+**Make modal go fullscreen of the viewport:**
+``<modal fullscreen="true"></modal>``
+
+**Show or hide the close button:**
+``<modal showCloseButton="true"></modal>``
+
+**Close button clicked callback:**
+``<modal close.call="myViewModelCloseFunction()"></modal>``
+
+**Show or hide using boolean value (true to show or false to hide):**
+``<modal showing.bind=myViewModelBoolean"></modal>``
+
+**Render a ViewModel inside of the modal:**
+``<modal view-model="myViewModel"></modal>``
+
+**Render a ViewModel inside of the modal with an object of content:**
+``<modal view-model="myViewModel" view-content.bind="myContent"></modal>``
+
+**Display a Modal with supplied content:**
+``<modal><h1>Some Heading</h1><p>My custom content in here</p></modal>``
 
 ## Credit
 Parts of this plugin are based off the [Aurelia bs-modal plugin](https://github.com/PWKad/aurelia-bs-modal) by [PWKad](https://github.com/PWKad). Instead of being based on Bootstrap, this version borrows some ideas presented in that plugin and extends them to a more native solution.
