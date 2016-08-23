@@ -1,15 +1,15 @@
-import {inject, customElement, bindable, bindingMode} from 'aurelia-framework';
+import {inject} from 'aurelia-dependency-injection';
+import {bindingMode} from 'aurelia-binding';
+import {bindable, customElement} from 'aurelia-templating';
 
 @customElement('modal')
 @inject(Element)
-@bindable({
-    name: 'showing',
-    attribute: 'showing',
-    changeHandler: 'showingChanged',
-    defaultBindingMode: bindingMode.twoWay,
-    defaultValue: false
-})
 export class Modal {
+    private element: Element;
+    private modal: Element;
+
+    @bindable({defaultBindingMode: bindingMode.twoWay}) showing = false;
+
     @bindable fullscreen = false;
     @bindable close = closeModal;
     @bindable showCloseButton = true;
@@ -20,14 +20,14 @@ export class Modal {
     @bindable viewModel;
     @bindable viewContent;
 
-    constructor(element) {
+    constructor(element: Element) {
         this.element = element;
     }
 
     attached() {
         if (this.allowClickClose) {
             document.addEventListener('click', e => {
-                if (e.target && e.target.classList && e.target.classList.contains('modal') && this.showing) {
+                if (e.target && (e.target as HTMLElement).classList && (e.target as HTMLElement).classList.contains('modal') && this.showing) {
                     this.showing = false;
 
                     if (this.close) {
@@ -67,6 +67,6 @@ export class Modal {
     }
 }
 
-function closeModal() {
+export function closeModal() {
     return false;
 }
