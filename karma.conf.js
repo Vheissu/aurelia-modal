@@ -1,41 +1,28 @@
-// Karma configuration
-// Generated on Fri Dec 05 2014 16:49:29 GMT-0500 (EST)
-
 module.exports = function(config) {
   config.set({
-    basePath: '',
-    frameworks: ['jspm', 'jasmine'],
-    jspm: {
-      loadFiles: ['src/**/*.js', 'test/**/*.js'],
-      paths: {
-          '*': '*.js'
-      }
-    },
-    files: [],
-    exclude: [
+    basePath: "",
+    frameworks: ["jasmine"],
+    files: [
+      "src/**/*.ts",
+      "test/**/*.ts"
     ],
     preprocessors: {
-      'test/**/*.js': ['babel'],
-      'src/**/*.js': ['babel']
+      'test/**/*.ts': ['typescript'],
+      'src/**/*.ts': ['typescript']
     },
-    'babelPreprocessor': {
+    typescriptPreprocessor: {
       options: {
-        sourceMap: 'inline',
-        modules: 'system',
-        moduleIds: false,
-        loose: "all",
-        optional: [
-          "es7.decorators",
-          "es7.classProperties"
-        ]
+        sourceMap: false,
+        target: 'es5',
+        module: 'amd',
+        noImplicitAny: true,
+        noResolve: true,
+        removeComments: true,
+        concatenateOutput: false 
+      },
+      transformPath: function(path) {
+        return path.replace(/\.ts$/, '.js');
       }
-    },
-    reporters: ['progress'],
-    port: 9876,
-    colors: true,
-    logLevel: config.LOG_INFO,
-    autoWatch: true,
-    browsers: ['Chrome'],
-    singleRun: false
+    }
   });
 };
