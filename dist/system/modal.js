@@ -1,153 +1,122 @@
-System.register(['aurelia-framework'], function (_export) {
-    'use strict';
-
-    var inject, customElement, bindable, bindingMode, Modal;
-
-    var _createDecoratedClass = (function () { function defineProperties(target, descriptors, initializers) { for (var i = 0; i < descriptors.length; i++) { var descriptor = descriptors[i]; var decorators = descriptor.decorators; var key = descriptor.key; delete descriptor.key; delete descriptor.decorators; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor || descriptor.initializer) descriptor.writable = true; if (decorators) { for (var f = 0; f < decorators.length; f++) { var decorator = decorators[f]; if (typeof decorator === 'function') { descriptor = decorator(target, key, descriptor) || descriptor; } else { throw new TypeError('The decorator for method ' + descriptor.key + ' is of the invalid type ' + typeof decorator); } } if (descriptor.initializer !== undefined) { initializers[key] = descriptor; continue; } } Object.defineProperty(target, key, descriptor); } } return function (Constructor, protoProps, staticProps, protoInitializers, staticInitializers) { if (protoProps) defineProperties(Constructor.prototype, protoProps, protoInitializers); if (staticProps) defineProperties(Constructor, staticProps, staticInitializers); return Constructor; }; })();
-
-    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
-
-    function _defineDecoratedPropertyDescriptor(target, key, descriptors) { var _descriptor = descriptors[key]; if (!_descriptor) return; var descriptor = {}; for (var _key in _descriptor) descriptor[_key] = _descriptor[_key]; descriptor.value = descriptor.initializer ? descriptor.initializer.call(target) : undefined; Object.defineProperty(target, key, descriptor); }
-
+System.register(['aurelia-dependency-injection', 'aurelia-binding', 'aurelia-templating'], function(exports_1, context_1) {
+    "use strict";
+    var __moduleName = context_1 && context_1.id;
+    var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+        var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+        if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+        else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+        return c > 3 && r && Object.defineProperty(target, key, r), r;
+    };
+    var __metadata = (this && this.__metadata) || function (k, v) {
+        if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+    };
+    var aurelia_dependency_injection_1, aurelia_binding_1, aurelia_templating_1;
+    var Modal;
     function closeModal() {
         return false;
     }
+    exports_1("closeModal", closeModal);
     return {
-        setters: [function (_aureliaFramework) {
-            inject = _aureliaFramework.inject;
-            customElement = _aureliaFramework.customElement;
-            bindable = _aureliaFramework.bindable;
-            bindingMode = _aureliaFramework.bindingMode;
-        }],
-        execute: function () {
+        setters:[
+            function (aurelia_dependency_injection_1_1) {
+                aurelia_dependency_injection_1 = aurelia_dependency_injection_1_1;
+            },
+            function (aurelia_binding_1_1) {
+                aurelia_binding_1 = aurelia_binding_1_1;
+            },
+            function (aurelia_templating_1_1) {
+                aurelia_templating_1 = aurelia_templating_1_1;
+            }],
+        execute: function() {
             Modal = (function () {
-                var _instanceInitializers = {};
-
-                _createDecoratedClass(Modal, [{
-                    key: 'fullscreen',
-                    decorators: [bindable],
-                    initializer: function initializer() {
-                        return false;
-                    },
-                    enumerable: true
-                }, {
-                    key: 'close',
-                    decorators: [bindable],
-                    initializer: function initializer() {
-                        return closeModal;
-                    },
-                    enumerable: true
-                }, {
-                    key: 'showCloseButton',
-                    decorators: [bindable],
-                    initializer: function initializer() {
-                        return true;
-                    },
-                    enumerable: true
-                }, {
-                    key: 'allowKeyClose',
-                    decorators: [bindable],
-                    initializer: function initializer() {
-                        return true;
-                    },
-                    enumerable: true
-                }, {
-                    key: 'allowClickClose',
-                    decorators: [bindable],
-                    initializer: function initializer() {
-                        return true;
-                    },
-                    enumerable: true
-                }, {
-                    key: 'viewModel',
-                    decorators: [bindable],
-                    initializer: null,
-                    enumerable: true
-                }, {
-                    key: 'viewContent',
-                    decorators: [bindable],
-                    initializer: null,
-                    enumerable: true
-                }], null, _instanceInitializers);
-
                 function Modal(element) {
-                    _classCallCheck(this, _Modal);
-
-                    _defineDecoratedPropertyDescriptor(this, 'fullscreen', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'close', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'showCloseButton', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'allowKeyClose', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'allowClickClose', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'viewModel', _instanceInitializers);
-
-                    _defineDecoratedPropertyDescriptor(this, 'viewContent', _instanceInitializers);
-
+                    this.showing = false;
+                    this.fullscreen = false;
+                    this.close = closeModal;
+                    this.showCloseButton = true;
+                    this.allowKeyClose = true;
+                    this.allowClickClose = true;
                     this.element = element;
                 }
-
-                Modal.prototype.attached = function attached() {
+                Modal.prototype.attached = function () {
                     var _this = this;
-
                     if (this.allowClickClose) {
                         document.addEventListener('click', function (e) {
                             if (e.target && e.target.classList && e.target.classList.contains('modal') && _this.showing) {
                                 _this.showing = false;
-
                                 if (_this.close) {
                                     _this.close();
                                 }
                             }
                         });
                     }
-
                     if (this.allowKeyClose) {
                         document.addEventListener('keyup', function (e) {
                             if (e.keyCode == 27 && _this.showing) {
                                 _this.showing = false;
-
                                 if (_this.close) {
                                     _this.close();
                                 }
                             }
                         });
                     }
-
                     if (this.fullscreen) {
                         this.modal.classList.add('modal--fullscreen');
                     }
                 };
-
-                Modal.prototype.showingChanged = function showingChanged(newVal) {
+                Modal.prototype.showingChanged = function (newVal) {
                     if (this.modal) {
                         if (newVal) {
                             this.modal.classList.remove('modal--hidden');
                             this.modal.classList.add('modal--showing');
-                        } else {
+                        }
+                        else {
                             this.modal.classList.remove('modal--showing');
                             this.modal.classList.add('modal--hidden');
                         }
                     }
                 };
-
-                var _Modal = Modal;
-                Modal = bindable({
-                    name: 'showing',
-                    attribute: 'showing',
-                    changeHandler: 'showingChanged',
-                    defaultBindingMode: bindingMode.twoWay,
-                    defaultValue: false
-                })(Modal) || Modal;
-                Modal = inject(Element)(Modal) || Modal;
-                Modal = customElement('modal')(Modal) || Modal;
+                __decorate([
+                    aurelia_templating_1.bindable({ defaultBindingMode: aurelia_binding_1.bindingMode.twoWay }), 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "showing", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "fullscreen", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "close", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "showCloseButton", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "allowKeyClose", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "allowClickClose", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "viewModel", void 0);
+                __decorate([
+                    aurelia_templating_1.bindable, 
+                    __metadata('design:type', Object)
+                ], Modal.prototype, "viewContent", void 0);
+                Modal = __decorate([
+                    aurelia_templating_1.customElement('modal'),
+                    aurelia_dependency_injection_1.inject(Element), 
+                    __metadata('design:paramtypes', [Element])
+                ], Modal);
                 return Modal;
-            })();
-
-            _export('Modal', Modal);
+            }());
+            exports_1("Modal", Modal);
         }
-    };
+    }
 });
+//# sourceMappingURL=modal.js.map
