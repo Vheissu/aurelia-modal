@@ -1,15 +1,19 @@
 <template>
-    <require from="./modal.css"></require>
+    <div class="modal">
+        <div class="modal__content">
+            <div class="modal__header">
+                <button class="modal__close" if.bind="showCloseButton" aria-label="Close" click.delegate="modalService.close()">x</button>
+                <slot name="header"></slot>
+            </div>
 
-    <div ref="modal" class="modal modal--hidden">
+            <div class="modal__body">
+                <slot name="body"></slot>
+            </div>
 
-        <button type="button" class="close" aria-label="Close" click.trigger="close()" if.bind="showCloseButton"><span aria-hidden="true">&times;</span></button>
-
-        <div class="modal__inner">
-            <div class="modal__inner__body">
-                <compose model.bind="viewContent" view-model.bind="viewModel"></compose>
-                <content></content>
+            <div class="modal__footer">
+                <slot name="footer"></slot>
             </div>
         </div>
+        <div class="modal__backdrop"></div>
     </div>
 </template>

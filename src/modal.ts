@@ -1,72 +1,25 @@
-import {inject} from 'aurelia-dependency-injection';
-import {bindingMode} from 'aurelia-binding';
-import {bindable, customElement} from 'aurelia-templating';
+import { PLATFORM } from 'aurelia-pal';
+import { bindable, customElement, useView } from 'aurelia-templating';
+
+import { ModalService } from './modal-service';
 
 @customElement('modal')
-@inject(Element)
+@useView(PLATFORM.moduleName('modal.html'))
 export class Modal {
-    private element: Element;
-    private modal: Element;
+    private modalService: ModalService;
 
-    @bindable({defaultBindingMode: bindingMode.twoWay}) showing = false;
+    @bindable() public showCloseButton: boolean | undefined;
+    @bindable() public closeAction = () => {};
 
-    @bindable fullscreen = false;
-    @bindable close = closeModal;
-    @bindable showCloseButton = true;
+    static inject = [ModalService];
 
-    @bindable allowKeyClose = true;
-    @bindable allowClickClose = true;
-
-    @bindable viewModel;
-    @bindable viewContent;
-
-    constructor(element: Element) {
-        this.element = element;
+    constructor(modalService: ModalService) {
+        this.modalService = modalService;
     }
 
-    attached() {
-        if (this.allowClickClose) {
-            document.addEventListener('click', e => {
-                if (e.target && (e.target as HTMLElement).classList && (e.target as HTMLElement).classList.contains('modal') && this.showing) {
-                    this.showing = false;
-
-                    if (this.close) {
-                        this.close();
-                    }
-                }
-            });
-        }
-
-        if (this.allowKeyClose) {
-            document.addEventListener('keyup', e => {
-                if (e.keyCode == 27 && this.showing) {
-                    this.showing = false;
-
-                    if (this.close) {
-                        this.close();
-                    }
-                }
-            });
-        }
-
-        if (this.fullscreen) {
-            this.modal.classList.add('modal--fullscreen');
+    public bind(): void {
+        if (typeof this.showCloseButton !== 'boolean') {
+            this.showCloseButton = !this.modalService.hideCloseButton;
         }
     }
-
-    showingChanged(newVal) {
-        if (this.modal) {
-            if (newVal) {
-                this.modal.classList.remove('modal--hidden');
-                this.modal.classList.add('modal--showing');
-            } else {
-                this.modal.classList.remove('modal--showing');
-                this.modal.classList.add('modal--hidden');
-            }
-        }
-    }
-}
-
-export function closeModal() {
-    return false;
 }
